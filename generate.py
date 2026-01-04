@@ -26,7 +26,7 @@ class RegexLearningGenerator:
         self.base_dir = Path(__file__).parent
         self.examples_dir = self.base_dir / "examples"
         self.templates_dir = self.base_dir / "templates"
-        self.html_output_dir = self.base_dir / "html_output"
+        self.html_output_dir = self.base_dir / "docs"
     
     def test_pattern(self, pattern_file: Path) -> tuple[str, str, str]:
         """Test a regex pattern against its test cases"""
@@ -259,6 +259,10 @@ class RegexLearningGenerator:
     <div class="example">
         <h2>Welcome to Regular Expression Learning</h2>
         <div class="description">
+
+        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee;">
+                <a href="https://github.com/buckrogers1965/regex_with_re_learning" target="_blank" style="display:inline-block; background:#24292e; color:white; padding:10px 15px; border-radius:5px; text-decoration:none; font-weight:bold;"> View Source on GitHub </a> </div>
+
             <p>This documentation demonstrates how regular expressions work by showing the pattern, test input, and match results side-by-side. Each example uses Python's <code>re</code> module with clear explanations of what each pattern does.</p>
             
             <h3>How to Use This Guide</h3>
