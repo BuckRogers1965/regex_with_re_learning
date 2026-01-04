@@ -1,0 +1,9 @@
+<p>Match ISO 8601 date format (YYYY-MM-DD) with validation.</p>
+<p><strong>Pattern breakdown:</strong></p>
+<ul>
+    <li><code>(?P&lt;year&gt;\d{4})</code> - 4-digit year</li>
+    <li><code>(?P&lt;month&gt;0[1-9]|1[0-2])</code> - month 01-12</li>
+    <li><code>(?P&lt;day&gt;0[1-9]|[12]\d|3[01])</code> - day 01-31</li>
+</ul>
+<p>This validates month and day ranges (though doesn't check for valid days in each month).</p>
+<p class="reference">Source: <a href="https://www.regular-expressions.info/dates.html" target="_blank">Regular-Expressions.info - Dates and Times</a></p>

@@ -1,0 +1,4 @@
+This is a sentence.
+Another sentence
+End with period.
+No period here

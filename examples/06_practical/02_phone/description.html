@@ -1,0 +1,9 @@
+<p>Match US phone numbers in various formats.</p>
+<p><strong>Pattern breakdown:</strong></p>
+<ul>
+    <li><code>(?:\d{3}[-.]?)?</code> - optional area code with optional separator</li>
+    <li><code>\d{3}[-.]?</code> - 3 digits with optional separator</li>
+    <li><code>\d{4}</code> - final 4 digits</li>
+</ul>
+<p>This handles formats like 555-123-4567, 555.123.4567, 5551234567, and 123-4567.</p>
+<p class="reference">Source: <a href="https://www.regular-expressions.info/examples.html" target="_blank">Regular-Expressions.info - Examples</a></p>

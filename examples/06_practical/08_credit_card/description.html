@@ -1,0 +1,8 @@
+<p>Match credit card numbers in various formats.</p>
+<p><strong>Pattern breakdown:</strong></p>
+<ul>
+    <li><code>(?:\d{4}[-\s]?){3}</code> - three groups of 4 digits with optional separator</li>
+    <li><code>\d{4}</code> - final 4 digits</li>
+</ul>
+<p><strong>Security Note:</strong> Never log or store credit card numbers in plain text! This is for format validation only.</p>
+<p class="reference">Source: <a href="https://www.regular-expressions.info/creditcard.html" target="_blank">Regular-Expressions.info - Credit Card Numbers</a></p>

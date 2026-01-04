@@ -1,0 +1,11 @@
+<p>A practical email validation pattern (simplified version).</p>
+<p><strong>Pattern breakdown:</strong></p>
+<ul>
+    <li><code>[A-Za-z0-9._%+-]+</code> - local part (before @)</li>
+    <li><code>@</code> - literal @ symbol</li>
+    <li><code>[A-Za-z0-9.-]+</code> - domain name</li>
+    <li><code>\.</code> - literal period</li>
+    <li><code>[A-Z|a-z]{2,}</code> - TLD (2+ letters)</li>
+</ul>
+<p><strong>Note:</strong> This is a simplified pattern. Production email validation should use more comprehensive patterns or specialized libraries.</p>
+<p class="reference">Source: <a href="https://emailregex.com/" target="_blank">EmailRegex.com - Email Validation Patterns</a></p>

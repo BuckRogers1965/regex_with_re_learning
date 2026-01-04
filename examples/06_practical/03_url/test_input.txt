@@ -1,0 +1,4 @@
+Visit https://example.com for more info.
+Check out http://www.test-site.org/path/page.html
+Link: https://subdomain.example.co.uk/path?query=value
+Not a URL: example.com

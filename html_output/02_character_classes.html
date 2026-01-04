@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Classes - Regex Learning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        nav {
+            background: white;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 1.1em;
+        }
+        
+        nav a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+        
+        .example {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .example h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .example h3 {
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .description {
+            margin-bottom: 25px;
+            font-size: 1.05em;
+        }
+        
+        .description ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        .description li {
+            margin-bottom: 8px;
+        }
+        
+        .code-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 1024px) {
+            .code-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .code-header {
+            background: #e9ecef;
+            padding: 10px 15px;
+            font-weight: 600;
+            color: #495057;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .code-content {
+            padding: 15px;
+            overflow-x: auto;
+        }
+        
+        pre {
+            margin: 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        
+        .pattern {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        
+        .match-result {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 4px;
+        }
+        
+        .no-match {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 4px;
+        }
+        
+        .group-info {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+        
+        .reference {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-style: italic;
+        }
+        
+        .reference a {
+            color: #1976d2;
+            font-weight: 500;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Character Classes</h1>
+            <p>Learn regular expressions by seeing patterns, test cases, and match results side-by-side</p>
+        </header>
+        <nav><a href="index.html"><strong>Home</strong></a> | <a href="01_basic_patterns.html">Basic Patterns</a> | <a href="02_character_classes.html">Character Classes</a> | <a href="03_anchors.html">Anchors and Boundaries</a> | <a href="04_groups.html">Groups and Capturing</a> | <a href="05_advanced_patterns.html">Advanced Patterns</a> | <a href="06_practical.html">Practical Examples</a></nav>
+<div class="example"><h2>Overview</h2><div class="description"><p>Match specific sets of characters using character classes and ranges</p></div></div>
+
+        <div class="example">
+            <h2>01 Simple Class</h2>
+            <div class="description">
+                <p>Square brackets <code>[]</code> define a character class that matches any one character inside the brackets.</p>
+<p><strong>Pattern breakdown:</strong></p>
+<ul>
+    <li><code>[aeiou]</code> - matches any single vowel</li>
+</ul>
+<p>In "apple", this matches 'a', then 'e'. In "rhythm", there are no vowels so no matches occur.</p>
+<p class="reference">Source: <a href="https://www.regular-expressions.info/charclass.html" target="_blank">Regular-Expressions.info - Character Classes</a></p>
+            </div>
+            
+            <div class="pattern">
+                Pattern: [aeiou]
+            </div>
+            
+            <div class="code-section">
+                <div class="code-block">
+                    <div class="code-header">Test Input</div>
+                    <div class="code-content">
+                        <pre>apple
+banana
+cherry
+rhythm</pre>
+                    </div>
+                </div>
+                
+                <div class="code-block">
+                    <div class="code-header">Match Results</div>
+                    <div class="code-content">
+                        <div class="match-result"><strong>Line 1:</strong> "<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">a</span>ppl<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">e</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "a"</div><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 2:</strong> "e"</div></div><div class="match-result"><strong>Line 2:</strong> "b<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">a</span>n<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">a</span>n<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">a</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "a"</div><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 2:</strong> "a"</div><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 3:</strong> "a"</div></div><div class="match-result"><strong>Line 3:</strong> "ch<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">e</span>rry"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "e"</div></div><div class="no-match"><strong>Line 4:</strong> "rhythm" - No match</div><div class="group-info"><strong>All matches found:</strong> 6<br>Matches: [&#x27;a&#x27;, &#x27;e&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;e&#x27;]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="example">
+            <h2>02 Ranges</h2>
+            <div class="description">
+                <p>Character ranges use a hyphen to specify a range of characters. <code>[0-9]</code> matches any digit.</p>
+<p><strong>Pattern breakdown:</strong></p>
+<ul>
+    <li><code>[0-9]+</code> - one or more digits</li>
+    <li>Matches entire number sequences</li>
+</ul>
+<p>This finds "3", "2", "2024", "555", and "1234" in the test input.</p>
+<p class="reference">Source: <a href="https://docs.python.org/3/library/re.html" target="_blank">Python re Documentation</a></p>
+            </div>
+            
+            <div class="pattern">
+                Pattern: [0-9]+
+            </div>
+            
+            <div class="code-section">
+                <div class="code-block">
+                    <div class="code-header">Test Input</div>
+                    <div class="code-content">
+                        <pre>I have 3 cats and 2 dogs.
+The year 2024 was great.
+No numbers here!
+Call me at 555-1234.</pre>
+                    </div>
+                </div>
+                
+                <div class="code-block">
+                    <div class="code-header">Match Results</div>
+                    <div class="code-content">
+                        <div class="match-result"><strong>Line 1:</strong> "I have <span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">3</span> cats and <span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">2</span> dogs."<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "3"</div><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 2:</strong> "2"</div></div><div class="match-result"><strong>Line 2:</strong> "The year <span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">2024</span> was great."<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "2024"</div></div><div class="no-match"><strong>Line 3:</strong> "No numbers here!" - No match</div><div class="match-result"><strong>Line 4:</strong> "Call me at <span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">555</span>-<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">1234</span>."<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "555"</div><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 2:</strong> "1234"</div></div><div class="group-info"><strong>All matches found:</strong> 5<br>Matches: [&#x27;3&#x27;, &#x27;2&#x27;, &#x27;2024&#x27;, &#x27;555&#x27;, &#x27;1234&#x27;]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="example">
+            <h2>03 Negated Class</h2>
+            <div class="description">
+                <p>A caret <code>^</code> at the start of a character class negates it, matching any character NOT in the class.</p>
+<p><strong>Pattern breakdown:</strong></p>
+<ul>
+    <li><code>[^0-9]+</code> - one or more characters that are NOT digits</li>
+</ul>
+<p>This matches "abc", "def", "test", and "data" - all the non-numeric parts.</p>
+<p class="reference">Source: <a href="https://www.regular-expressions.info/charclass.html" target="_blank">Regular-Expressions.info - Negated Character Classes</a></p>
+            </div>
+            
+            <div class="pattern">
+                Pattern: [^0-9]+
+            </div>
+            
+            <div class="code-section">
+                <div class="code-block">
+                    <div class="code-header">Test Input</div>
+                    <div class="code-content">
+                        <pre>abc123def
+456
+test789data</pre>
+                    </div>
+                </div>
+                
+                <div class="code-block">
+                    <div class="code-header">Match Results</div>
+                    <div class="code-content">
+                        <div class="match-result"><strong>Line 1:</strong> "<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">abc</span>123<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">def</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "abc"</div><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 2:</strong> "def"</div></div><div class="no-match"><strong>Line 2:</strong> "456" - No match</div><div class="match-result"><strong>Line 3:</strong> "<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">test</span>789<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">data</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "test"</div><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 2:</strong> "data"</div></div><div class="group-info"><strong>All matches found:</strong> 4<br>Matches: [&#x27;abc&#x27;, &#x27;def\n&#x27;, &#x27;\ntest&#x27;, &#x27;data&#x27;]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="example">
+            <h2>04 Shorthand Classes</h2>
+            <div class="description">
+                <p>Shorthand character classes provide convenient shortcuts for common patterns.</p>
+<p><strong>Common shorthands:</strong></p>
+<ul>
+    <li><code>\w</code> - word character [a-zA-Z0-9_]</li>
+    <li><code>\d</code> - digit [0-9]</li>
+    <li><code>\s</code> - whitespace [ \t\n\r\f\v]</li>
+    <li><code>\W</code>, <code>\D</code>, <code>\S</code> - negated versions</li>
+</ul>
+<p>The pattern <code>\w+</code> matches sequences of word characters: "Hello", "World", "test_variable_123", "price", "49", "99".</p>
+<p class="reference">Source: <a href="https://docs.python.org/3/library/re.html#regular-expression-syntax" target="_blank">Python re Syntax Documentation</a></p>
+            </div>
+            
+            <div class="pattern">
+                Pattern: \w+
+            </div>
+            
+            <div class="code-section">
+                <div class="code-block">
+                    <div class="code-header">Test Input</div>
+                    <div class="code-content">
+                        <pre>Hello World!
+test_variable_123
+price: $49.99</pre>
+                    </div>
+                </div>
+                
+                <div class="code-block">
+                    <div class="code-header">Match Results</div>
+                    <div class="code-content">
+                        <div class="match-result"><strong>Line 1:</strong> "<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">Hello</span> <span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">World</span>!"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "Hello"</div><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 2:</strong> "World"</div></div><div class="match-result"><strong>Line 2:</strong> "<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">test_variable_123</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "test_variable_123"</div></div><div class="match-result"><strong>Line 3:</strong> "<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">price</span>: $<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">49</span>.<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">99</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "price"</div><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 2:</strong> "49"</div><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 3:</strong> "99"</div></div><div class="group-info"><strong>All matches found:</strong> 6<br>Matches: [&#x27;Hello&#x27;, &#x27;World&#x27;, &#x27;test_variable_123&#x27;, &#x27;price&#x27;, &#x27;49&#x27;, &#x27;99&#x27;]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

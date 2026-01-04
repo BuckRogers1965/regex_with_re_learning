@@ -1,0 +1,8 @@
+<p>Positive lookahead <code>(?=...)</code> matches a position where the pattern ahead matches, without consuming characters.</p>
+<p><strong>Pattern breakdown:</strong></p>
+<ul>
+    <li><code>\d+</code> - one or more digits</li>
+    <li><code>(?= dollars)</code> - only if followed by " dollars" (not captured)</li>
+</ul>
+<p>This matches "50" and "100" but not "30" because it's followed by "euros".</p>
+<p class="reference">Source: <a href="https://www.regular-expressions.info/lookaround.html" target="_blank">Regular-Expressions.info - Lookaround Assertions</a></p>

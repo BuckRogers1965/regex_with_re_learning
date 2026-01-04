@@ -1,0 +1,11 @@
+555-123-4567
+555.123.4567
+5551234567
+123-4567
+(555) 123-4567
+Please call (555) 123-4567 for assistance.
+You can reach support at 800-555-0199 or optionally 800.555.0100.
+My local number is 867-5309, call me maybe.
+Our office line: 555 123 4567 is open 9am-5pm.
+Ticket #123456789999 is not a phone number.
+(425)555-0123 is valid even without a space after parens.

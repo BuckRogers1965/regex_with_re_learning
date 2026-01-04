@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practical Examples - Regex Learning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        nav {
+            background: white;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 1.1em;
+        }
+        
+        nav a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+        
+        .example {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .example h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .example h3 {
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .description {
+            margin-bottom: 25px;
+            font-size: 1.05em;
+        }
+        
+        .description ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        .description li {
+            margin-bottom: 8px;
+        }
+        
+        .code-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 1024px) {
+            .code-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .code-header {
+            background: #e9ecef;
+            padding: 10px 15px;
+            font-weight: 600;
+            color: #495057;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .code-content {
+            padding: 15px;
+            overflow-x: auto;
+        }
+        
+        pre {
+            margin: 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+        
+        .pattern {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        
+        .match-result {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 4px;
+        }
+        
+        .no-match {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 4px;
+        }
+        
+        .group-info {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+        
+        .reference {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-style: italic;
+        }
+        
+        .reference a {
+            color: #1976d2;
+            font-weight: 500;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Practical Examples</h1>
+            <p>Learn regular expressions by seeing patterns, test cases, and match results side-by-side</p>
+        </header>
+        <nav><a href="index.html"><strong>Home</strong></a> | <a href="01_basic_patterns.html">Basic Patterns</a> | <a href="02_character_classes.html">Character Classes</a> | <a href="03_anchors.html">Anchors and Boundaries</a> | <a href="04_groups.html">Groups and Capturing</a> | <a href="05_advanced_patterns.html">Advanced Patterns</a> | <a href="06_practical.html">Practical Examples</a></nav>
+<div class="example"><h2>Overview</h2><div class="description"><p>Real-world regex patterns for common tasks</p></div></div>
+
+        <div class="example">
+            <h2>01 Email</h2>
+            <div class="description">
+                <p>A practical email validation pattern (simplified version).</p>
+<p><strong>Pattern breakdown:</strong></p>
+<ul>
+    <li><code>[A-Za-z0-9._%+-]+</code> - local part (before @)</li>
+    <li><code>@</code> - literal @ symbol</li>
+    <li><code>[A-Za-z0-9.-]+</code> - domain name</li>
+    <li><code>\.</code> - literal period</li>
+    <li><code>[A-Z|a-z]{2,}</code> - TLD (2+ letters)</li>
+</ul>
+<p><strong>Note:</strong> This is a simplified pattern. Production email validation should use more comprehensive patterns or specialized libraries.</p>
+<p class="reference">Source: <a href="https://emailregex.com/" target="_blank">EmailRegex.com - Email Validation Patterns</a></p>
+            </div>
+            
+            <div class="pattern">
+                Pattern: \b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b
+            </div>
+            
+            <div class="code-section">
+                <div class="code-block">
+                    <div class="code-header">Test Input</div>
+                    <div class="code-content">
+                        <pre>user@example.com
+test.email+tag@domain.co.uk
+invalid@
+@invalid.com
+valid_email123@test-domain.org</pre>
+                    </div>
+                </div>
+                
+                <div class="code-block">
+                    <div class="code-header">Match Results</div>
+                    <div class="code-content">
+                        <div class="match-result"><strong>Line 1:</strong> "<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">user@example.com</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "user@example.com"</div></div><div class="match-result"><strong>Line 2:</strong> "<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">test.email+tag@domain.co.uk</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "test.email+tag@domain.co.uk"</div></div><div class="no-match"><strong>Line 3:</strong> "invalid@" - No match</div><div class="no-match"><strong>Line 4:</strong> "@invalid.com" - No match</div><div class="match-result"><strong>Line 5:</strong> "<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">valid_email123@test-domain.org</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "valid_email123@test-domain.org"</div></div><div class="group-info"><strong>All matches found:</strong> 3<br>Matches: [&#x27;user@example.com&#x27;, &#x27;test.email+tag@domain.co.uk&#x27;, &#x27;valid_email123@test-domain.org&#x27;]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="example">
+            <h2>02 Phone</h2>
+            <div class="description">
+                <p>Match US phone numbers in various formats.</p>
+<p><strong>Pattern breakdown:</strong></p>
+<ul>
+    <li><code>(?:\d{3}[-.]?)?</code> - optional area code with optional separator</li>
+    <li><code>\d{3}[-.]?</code> - 3 digits with optional separator</li>
+    <li><code>\d{4}</code> - final 4 digits</li>
+</ul>
+<p>This handles formats like 555-123-4567, 555.123.4567, 5551234567, and 123-4567.</p>
+<p class="reference">Source: <a href="https://www.regular-expressions.info/examples.html" target="_blank">Regular-Expressions.info - Examples</a></p>
+            </div>
+            
+            <div class="pattern">
+                Pattern: (?:(?:\(\d{3}\)|(?:\b\d{3}))[-.\s]?)?\b\d{3}[-.]?\d{4}\b
+            </div>
+            
+            <div class="code-section">
+                <div class="code-block">
+                    <div class="code-header">Test Input</div>
+                    <div class="code-content">
+                        <pre>555-123-4567
+555.123.4567
+5551234567
+123-4567
+(555) 123-4567
+Please call (555) 123-4567 for assistance.
+You can reach support at 800-555-0199 or optionally 800.555.0100.
+My local number is 867-5309, call me maybe.
+Our office line: 555 123 4567 is open 9am-5pm.
+Ticket #123456789999 is not a phone number.
+(425)555-0123 is valid even without a space after parens.
+</pre>
+                    </div>
+                </div>
+                
+                <div class="code-block">
+                    <div class="code-header">Match Results</div>
+                    <div class="code-content">
+                        <div class="match-result"><strong>Line 1:</strong> "<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">555-123-4567</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "555-123-4567"</div></div><div class="match-result"><strong>Line 2:</strong> "<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">555.123.4567</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "555.123.4567"</div></div><div class="no-match"><strong>Line 3:</strong> "5551234567" - No match</div><div class="match-result"><strong>Line 4:</strong> "<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">123-4567</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "123-4567"</div></div><div class="match-result"><strong>Line 5:</strong> "<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">(555) 123-4567</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "(555) 123-4567"</div></div><div class="match-result"><strong>Line 6:</strong> "Please call <span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">(555) 123-4567</span> for assistance."<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "(555) 123-4567"</div></div><div class="match-result"><strong>Line 7:</strong> "You can reach support at <span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">800-555-0199</span> or optionally <span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">800.555.0100</span>."<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "800-555-0199"</div><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 2:</strong> "800.555.0100"</div></div><div class="match-result"><strong>Line 8:</strong> "My local number is <span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">867-5309</span>, call me maybe."<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "867-5309"</div></div><div class="no-match"><strong>Line 9:</strong> "Our office line: 555 123 4567 is open 9am-5pm." - No match</div><div class="no-match"><strong>Line 10:</strong> "Ticket #123456789999 is not a phone number." - No match</div><div class="match-result"><strong>Line 11:</strong> "<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">(425)555-0123</span> is valid even without a space after parens."<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "(425)555-0123"</div></div><div class="group-info"><strong>All matches found:</strong> 9<br>Matches: [&#x27;555-123-4567&#x27;, &#x27;555.123.4567&#x27;, &#x27;123-4567&#x27;, &#x27;(555) 123-4567&#x27;, &#x27;(555) 123-4567&#x27;, &#x27;800-555-0199&#x27;, &#x27;800.555.0100&#x27;, &#x27;867-5309&#x27;, &#x27;(425)555-0123&#x27;]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="example">
+            <h2>03 Url</h2>
+            <div class="description">
+                <p>Extract HTTP and HTTPS URLs from text.</p>
+<p><strong>Pattern breakdown:</strong></p>
+<ul>
+    <li><code>https?://</code> - HTTP or HTTPS protocol</li>
+    <li><code>(?:www\.)?</code> - optional www prefix</li>
+    <li><code>[-a-zA-Z0-9@:%._\+~#=]{1,256}</code> - domain characters</li>
+    <li><code>\.[a-zA-Z0-9()]{1,6}</code> - TLD</li>
+    <li><code>(?:[-a-zA-Z0-9()@:%_\+.~#?&/=]*)</code> - optional path and query</li>
+</ul>
+<p class="reference">Source: <a href="https://urlregex.com/" target="_blank">URLRegex.com - URL Matching Patterns</a></p>
+            </div>
+            
+            <div class="pattern">
+                Pattern: https?://(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&amp;/=]*)
+            </div>
+            
+            <div class="code-section">
+                <div class="code-block">
+                    <div class="code-header">Test Input</div>
+                    <div class="code-content">
+                        <pre>Visit https://example.com for more info.
+Check out http://www.test-site.org/path/page.html
+Link: https://subdomain.example.co.uk/path?query=value
+Not a URL: example.com</pre>
+                    </div>
+                </div>
+                
+                <div class="code-block">
+                    <div class="code-header">Match Results</div>
+                    <div class="code-content">
+                        <div class="match-result"><strong>Line 1:</strong> "Visit <span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">https://example.com</span> for more info."<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "https://example.com"</div></div><div class="match-result"><strong>Line 2:</strong> "Check out <span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">http://www.test-site.org/path/page.html</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "http://www.test-site.org/path/page.html"</div></div><div class="match-result"><strong>Line 3:</strong> "Link: <span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">https://subdomain.example.co.uk/path?query=value</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "https://subdomain.example.co.uk/path?query=value"</div></div><div class="no-match"><strong>Line 4:</strong> "Not a URL: example.com" - No match</div><div class="group-info"><strong>All matches found:</strong> 3<br>Matches: [&#x27;https://example.com&#x27;, &#x27;http://www.test-site.org/path/page.html&#x27;, &#x27;https://subdomain.example.co.uk/path?query=value&#x27;]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="example">
+            <h2>04 Date</h2>
+            <div class="description">
+                <p>Match ISO 8601 date format (YYYY-MM-DD) with validation.</p>
+<p><strong>Pattern breakdown:</strong></p>
+<ul>
+    <li><code>(?P&lt;year&gt;\d{4})</code> - 4-digit year</li>
+    <li><code>(?P&lt;month&gt;0[1-9]|1[0-2])</code> - month 01-12</li>
+    <li><code>(?P&lt;day&gt;0[1-9]|[12]\d|3[01])</code> - day 01-31</li>
+</ul>
+<p>This validates month and day ranges (though doesn't check for valid days in each month).</p>
+<p class="reference">Source: <a href="https://www.regular-expressions.info/dates.html" target="_blank">Regular-Expressions.info - Dates and Times</a></p>
+            </div>
+            
+            <div class="pattern">
+                Pattern: \b(?P&lt;year&gt;\d{4})-(?P&lt;month&gt;0[1-9]|1[0-2])-(?P&lt;day&gt;0[1-9]|[12]\d|3[01])\b
+            </div>
+            
+            <div class="code-section">
+                <div class="code-block">
+                    <div class="code-header">Test Input</div>
+                    <div class="code-content">
+                        <pre>Meeting on 2024-01-15
+Deadline: 2024-12-31
+Invalid: 2024-13-45
+Also check 2023-06-30</pre>
+                    </div>
+                </div>
+                
+                <div class="code-block">
+                    <div class="code-header">Match Results</div>
+                    <div class="code-content">
+                        <div class="match-result"><strong>Line 1:</strong> "Meeting on <span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">2024-01-15</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "2024-01-15"<br><strong>Groups:</strong> 1: "2024", 2: "01", 3: "15"<br><strong>Named:</strong> year: "2024", month: "01", day: "15"</div></div><div class="match-result"><strong>Line 2:</strong> "Deadline: <span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">2024-12-31</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "2024-12-31"<br><strong>Groups:</strong> 1: "2024", 2: "12", 3: "31"<br><strong>Named:</strong> year: "2024", month: "12", day: "31"</div></div><div class="no-match"><strong>Line 3:</strong> "Invalid: 2024-13-45" - No match</div><div class="match-result"><strong>Line 4:</strong> "Also check <span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">2023-06-30</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "2023-06-30"<br><strong>Groups:</strong> 1: "2023", 2: "06", 3: "30"<br><strong>Named:</strong> year: "2023", month: "06", day: "30"</div></div><div class="group-info"><strong>All matches found:</strong> 3<br>Matches: [(&#x27;2024&#x27;, &#x27;01&#x27;, &#x27;15&#x27;), (&#x27;2024&#x27;, &#x27;12&#x27;, &#x27;31&#x27;), (&#x27;2023&#x27;, &#x27;06&#x27;, &#x27;30&#x27;)]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="example">
+            <h2>05 Password</h2>
+            <div class="description">
+                <p>Validate passwords with multiple requirements using lookaheads.</p>
+<p><strong>Requirements:</strong></p>
+<ul>
+    <li><code>(?=.*[a-z])</code> - at least one lowercase letter</li>
+    <li><code>(?=.*[A-Z])</code> - at least one uppercase letter</li>
+    <li><code>(?=.*\d)</code> - at least one digit</li>
+    <li><code>(?=.*[@$!%*?&])</code> - at least one special character</li>
+    <li><code>[A-Za-z\d@$!%*?&]{8,}</code> - 8+ characters total</li>
+</ul>
+<p>This ensures strong password requirements are met.</p>
+<p class="reference">Source: <a href="https://www.regular-expressions.info/password.html" target="_blank">Regular-Expressions.info - Password Validation</a></p>
+            </div>
+            
+            <div class="pattern">
+                Pattern: ^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&amp;])[A-Za-z\d@$!%*?&amp;]{8,}$
+            </div>
+            
+            <div class="code-section">
+                <div class="code-block">
+                    <div class="code-header">Test Input</div>
+                    <div class="code-content">
+                        <pre>Password123!
+weakpass
+NoSpecial123
+NoDigits!
+Short1!
+ValidPass123!</pre>
+                    </div>
+                </div>
+                
+                <div class="code-block">
+                    <div class="code-header">Match Results</div>
+                    <div class="code-content">
+                        <div class="match-result"><strong>Line 1:</strong> "<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">Password123!</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "Password123!"</div></div><div class="no-match"><strong>Line 2:</strong> "weakpass" - No match</div><div class="no-match"><strong>Line 3:</strong> "NoSpecial123" - No match</div><div class="no-match"><strong>Line 4:</strong> "NoDigits!" - No match</div><div class="no-match"><strong>Line 5:</strong> "Short1!" - No match</div><div class="match-result"><strong>Line 6:</strong> "<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">ValidPass123!</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "ValidPass123!"</div></div><div class="group-info"><strong>All matches found:</strong> 2<br>Matches: [&#x27;Password123!&#x27;, &#x27;ValidPass123!&#x27;]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="example">
+            <h2>06 Html Tags</h2>
+            <div class="description">
+                <p>Extract HTML tags and their content (simplified pattern).</p>
+<p><strong>Pattern breakdown:</strong></p>
+<ul>
+    <li><code>&lt;([a-z]+)</code> - opening tag name (captured)</li>
+    <li><code>([^>]*)</code> - attributes</li>
+    <li><code>&gt;(.*?)&lt;/\1&gt;</code> - content and matching closing tag</li>
+    <li><code>\1</code> - backreference to tag name</li>
+</ul>
+<p><strong>Note:</strong> This is simplified. Real HTML parsing should use proper HTML parsers, not regex.</p>
+<p class="reference">Source: <a href="https://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags" target="_blank">Stack Overflow - Why not parse HTML with regex</a></p>
+            </div>
+            
+            <div class="pattern">
+                Pattern: &lt;([a-z]+)([^&gt;]*)&gt;(.*?)&lt;/\1&gt;
+            </div>
+            
+            <div class="code-section">
+                <div class="code-block">
+                    <div class="code-header">Test Input</div>
+                    <div class="code-content">
+                        <pre>&lt;p&gt;This is a paragraph.&lt;/p&gt;
+&lt;div class=&quot;container&quot;&gt;Content here&lt;/div&gt;
+&lt;span&gt;Text&lt;/span&gt;
+&lt;img src=&quot;test.jpg&quot; /&gt;</pre>
+                    </div>
+                </div>
+                
+                <div class="code-block">
+                    <div class="code-header">Match Results</div>
+                    <div class="code-content">
+                        <div class="match-result"><strong>Line 1:</strong> "<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">&lt;p&gt;This is a paragraph.&lt;/p&gt;</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "&lt;p&gt;This is a paragraph.&lt;/p&gt;"<br><strong>Groups:</strong> 1: "p", 2: "", 3: "This is a paragraph."</div></div><div class="match-result"><strong>Line 2:</strong> "<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">&lt;div class=&quot;container&quot;&gt;Content here&lt;/div&gt;</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "&lt;div class=&quot;container&quot;&gt;Content here&lt;/div&gt;"<br><strong>Groups:</strong> 1: "div", 2: " class=&quot;container&quot;", 3: "Content here"</div></div><div class="match-result"><strong>Line 3:</strong> "<span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">&lt;span&gt;Text&lt;/span&gt;</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "&lt;span&gt;Text&lt;/span&gt;"<br><strong>Groups:</strong> 1: "span", 2: "", 3: "Text"</div></div><div class="no-match"><strong>Line 4:</strong> "&lt;img src=&quot;test.jpg&quot; /&gt;" - No match</div><div class="group-info"><strong>All matches found:</strong> 3<br>Matches: [(&#x27;p&#x27;, &#x27;&#x27;, &#x27;This is a paragraph.&#x27;), (&#x27;div&#x27;, &#x27; class=&quot;container&quot;&#x27;, &#x27;Content here&#x27;), (&#x27;span&#x27;, &#x27;&#x27;, &#x27;Text&#x27;)]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="example">
+            <h2>07 Ip Address</h2>
+            <div class="description">
+                <p>Match valid IPv4 addresses with range validation.</p>
+<p><strong>Pattern breakdown:</strong></p>
+<ul>
+    <li><code>25[0-5]</code> - 250-255</li>
+    <li><code>2[0-4][0-9]</code> - 200-249</li>
+    <li><code>[01]?[0-9][0-9]?</code> - 0-199</li>
+    <li>Repeated 4 times with dots between</li>
+</ul>
+<p>This validates that each octet is in the valid range 0-255.</p>
+<p class="reference">Source: <a href="https://www.regular-expressions.info/ip.html" target="_blank">Regular-Expressions.info - IP Addresses</a></p>
+            </div>
+            
+            <div class="pattern">
+                Pattern: \b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b
+            </div>
+            
+            <div class="code-section">
+                <div class="code-block">
+                    <div class="code-header">Test Input</div>
+                    <div class="code-content">
+                        <pre>Server IP: 192.168.1.1
+Invalid: 256.1.1.1
+Another valid: 10.0.0.255
+Not an IP: 1.2.3</pre>
+                    </div>
+                </div>
+                
+                <div class="code-block">
+                    <div class="code-header">Match Results</div>
+                    <div class="code-content">
+                        <div class="match-result"><strong>Line 1:</strong> "Server IP: <span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">192.168.1.1</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "192.168.1.1"</div></div><div class="no-match"><strong>Line 2:</strong> "Invalid: 256.1.1.1" - No match</div><div class="match-result"><strong>Line 3:</strong> "Another valid: <span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">10.0.0.255</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "10.0.0.255"</div></div><div class="no-match"><strong>Line 4:</strong> "Not an IP: 1.2.3" - No match</div><div class="group-info"><strong>All matches found:</strong> 2<br>Matches: [&#x27;192.168.1.1&#x27;, &#x27;10.0.0.255&#x27;]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="example">
+            <h2>08 Credit Card</h2>
+            <div class="description">
+                <p>Match credit card numbers in various formats.</p>
+<p><strong>Pattern breakdown:</strong></p>
+<ul>
+    <li><code>(?:\d{4}[-\s]?){3}</code> - three groups of 4 digits with optional separator</li>
+    <li><code>\d{4}</code> - final 4 digits</li>
+</ul>
+<p><strong>Security Note:</strong> Never log or store credit card numbers in plain text! This is for format validation only.</p>
+<p class="reference">Source: <a href="https://www.regular-expressions.info/creditcard.html" target="_blank">Regular-Expressions.info - Credit Card Numbers</a></p>
+            </div>
+            
+            <div class="pattern">
+                Pattern: \b(?:\d{4}[-\s]?){3}\d{4}\b
+            </div>
+            
+            <div class="code-section">
+                <div class="code-block">
+                    <div class="code-header">Test Input</div>
+                    <div class="code-content">
+                        <pre>Card: 1234-5678-9012-3456
+Also valid: 1234 5678 9012 3456
+No spaces: 1234567890123456
+Invalid: 1234-5678-901</pre>
+                    </div>
+                </div>
+                
+                <div class="code-block">
+                    <div class="code-header">Match Results</div>
+                    <div class="code-content">
+                        <div class="match-result"><strong>Line 1:</strong> "Card: <span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">1234-5678-9012-3456</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "1234-5678-9012-3456"</div></div><div class="match-result"><strong>Line 2:</strong> "Also valid: <span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">1234 5678 9012 3456</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "1234 5678 9012 3456"</div></div><div class="match-result"><strong>Line 3:</strong> "No spaces: <span style="background-color: #a5d6a7; font-weight: bold; border-radius: 3px; padding: 0 2px;">1234567890123456</span>"<br><div style="margin-top: 4px; margin-left: 10px; font-size: 0.9em; border-left: 2px solid #888; padding-left: 8px;"><strong>Match 1:</strong> "1234567890123456"</div></div><div class="no-match"><strong>Line 4:</strong> "Invalid: 1234-5678-901" - No match</div><div class="group-info"><strong>All matches found:</strong> 3<br>Matches: [&#x27;1234-5678-9012-3456&#x27;, &#x27;1234 5678 9012 3456&#x27;, &#x27;1234567890123456&#x27;]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,5 @@
+user@example.com
+test.email+tag@domain.co.uk
+invalid@
+@invalid.com
+valid_email123@test-domain.org

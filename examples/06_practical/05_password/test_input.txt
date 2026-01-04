@@ -1,0 +1,6 @@
+Password123!
+weakpass
+NoSpecial123
+NoDigits!
+Short1!
+ValidPass123!

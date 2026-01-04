@@ -1,0 +1,10 @@
+<p>Extract HTTP and HTTPS URLs from text.</p>
+<p><strong>Pattern breakdown:</strong></p>
+<ul>
+    <li><code>https?://</code> - HTTP or HTTPS protocol</li>
+    <li><code>(?:www\.)?</code> - optional www prefix</li>
+    <li><code>[-a-zA-Z0-9@:%._\+~#=]{1,256}</code> - domain characters</li>
+    <li><code>\.[a-zA-Z0-9()]{1,6}</code> - TLD</li>
+    <li><code>(?:[-a-zA-Z0-9()@:%_\+.~#?&/=]*)</code> - optional path and query</li>
+</ul>
+<p class="reference">Source: <a href="https://urlregex.com/" target="_blank">URLRegex.com - URL Matching Patterns</a></p>

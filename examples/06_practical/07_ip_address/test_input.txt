@@ -1,0 +1,4 @@
+Server IP: 192.168.1.1
+Invalid: 256.1.1.1
+Another valid: 10.0.0.255
+Not an IP: 1.2.3

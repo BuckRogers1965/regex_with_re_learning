@@ -1,0 +1,9 @@
+<p>Non-capturing groups <code>(?:...)</code> group patterns without creating a capture.</p>
+<p><strong>Pattern breakdown:</strong></p>
+<ul>
+    <li><code>(?:Mr|Ms|Mrs)</code> - match title but don't capture it</li>
+    <li><code>\.</code> - literal period</li>
+    <li><code>(\w+)</code> - capture the last name (Group 1)</li>
+</ul>
+<p>Use non-capturing groups when you need grouping for alternation or quantifiers but don't need to extract that part.</p>
+<p class="reference">Source: <a href="https://www.regular-expressions.info/brackets.html" target="_blank">Regular-Expressions.info - Non-Capturing Groups</a></p>

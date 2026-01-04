@@ -1,0 +1,11 @@
+<p>Validate passwords with multiple requirements using lookaheads.</p>
+<p><strong>Requirements:</strong></p>
+<ul>
+    <li><code>(?=.*[a-z])</code> - at least one lowercase letter</li>
+    <li><code>(?=.*[A-Z])</code> - at least one uppercase letter</li>
+    <li><code>(?=.*\d)</code> - at least one digit</li>
+    <li><code>(?=.*[@$!%*?&])</code> - at least one special character</li>
+    <li><code>[A-Za-z\d@$!%*?&]{8,}</code> - 8+ characters total</li>
+</ul>
+<p>This ensures strong password requirements are met.</p>
+<p class="reference">Source: <a href="https://www.regular-expressions.info/password.html" target="_blank">Regular-Expressions.info - Password Validation</a></p>

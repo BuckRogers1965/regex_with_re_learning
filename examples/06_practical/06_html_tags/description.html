@@ -1,0 +1,10 @@
+<p>Extract HTML tags and their content (simplified pattern).</p>
+<p><strong>Pattern breakdown:</strong></p>
+<ul>
+    <li><code>&lt;([a-z]+)</code> - opening tag name (captured)</li>
+    <li><code>([^>]*)</code> - attributes</li>
+    <li><code>&gt;(.*?)&lt;/\1&gt;</code> - content and matching closing tag</li>
+    <li><code>\1</code> - backreference to tag name</li>
+</ul>
+<p><strong>Note:</strong> This is simplified. Real HTML parsing should use proper HTML parsers, not regex.</p>
+<p class="reference">Source: <a href="https://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags" target="_blank">Stack Overflow - Why not parse HTML with regex</a></p>

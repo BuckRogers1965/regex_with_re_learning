@@ -1,0 +1,4 @@
+The cat sat on the mat.
+I have a dog, not a cat.
+Concatenate these strings.
+CAT is not the same as cat.

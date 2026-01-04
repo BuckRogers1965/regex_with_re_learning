@@ -1,0 +1,8 @@
+<p>Negative lookbehine <code>(?&lt;!...)</code> matches a position where the pattern ahead does NOT match.</p>
+<p><strong>Pattern breakdown:</strong></p>
+<ul>
+    <li><code>\b\w+</code> - word characters</li>
+    <li><code>(?!ing\b)</code> - not followed by "ing" at word boundary</li>
+</ul>
+<p>This matches "test" and "walk" but not "running" or "jumping".</p>
+<p class="reference">Source: <a href="https://docs.python.org/3/howto/regex.html#lookahead-assertions" target="_blank">Python Regex HOWTO - Lookahead</a></p>

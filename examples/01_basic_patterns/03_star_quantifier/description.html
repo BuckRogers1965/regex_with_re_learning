@@ -1,0 +1,9 @@
+<p>The star <code>*</code> quantifier means "zero or more" of the preceding character.</p>
+<p><strong>Pattern breakdown:</strong></p>
+<ul>
+    <li><code>c</code> - literal 'c'</li>
+    <li><code>a*</code> - zero or more 'a' characters</li>
+    <li><code>t</code> - literal 't'</li>
+</ul>
+<p>This matches "ct" (zero a's), "cat" (one a), "caat" (two a's), etc. It does not match "cbt" because the middle character must be 'a' if present.</p>
+<p class="reference">Source: <a href="https://www.regular-expressions.info/repeat.html" target="_blank">Regular-Expressions.info - Quantifiers</a></p>

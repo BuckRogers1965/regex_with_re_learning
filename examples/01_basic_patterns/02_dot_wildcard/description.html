@@ -1,0 +1,9 @@
+<p>The dot <code>.</code> is a wildcard that matches any single character except newline.</p>
+<p><strong>Pattern breakdown:</strong></p>
+<ul>
+    <li><code>c</code> - literal 'c'</li>
+    <li><code>.</code> - any single character</li>
+    <li><code>t</code> - literal 't'</li>
+</ul>
+<p>This matches "cat", "cot", "cut", and even "c t" (with a space), but not "ct" (missing middle character) or "coat" (too many characters between c and t).</p>
+<p class="reference">Source: <a href="https://docs.python.org/3/library/re.html" target="_blank">Python re Documentation</a></p>
